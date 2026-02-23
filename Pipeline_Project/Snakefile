@@ -4,7 +4,7 @@ SAMPLES = ["SRR5660030", "SRR5660033", "SRR5660044", "SRR5660045"]
 #did this by creating a summary table with the relevant information and then writing it to the report file
 
 #thought process of this:
-#1. I need to extract the CDS from the HCMV genome, which will be 
+#1. I need to extract the CDS from the HCMV genome
 #2. I will use the get_hcmv_data.py script to do this, which will output a fasta file with the CDS sequences
 #3. I will then build a kallisto index from the CDS fasta file, which will be used for quantification
 #4. I will run kallisto quant on each of the samples, which will output a directory with the quantification results
