@@ -11,7 +11,7 @@ The analysis uses RNA-Seq data from human fibroblasts infected with HCMV, obtain
 
 ---
 
-## 🔄 Analysis Workflow
+## Analysis Workflow
 The pipeline is managed by **Snakemake** and follows these logical steps:
 
 1.  **Reference Construction:** Extracting 169 Coding Sequences (CDS) from the HCMV genome (NC_006273.2).
@@ -25,7 +25,7 @@ The pipeline is managed by **Snakemake** and follows these logical steps:
 
 ---
 
-## 🛠 Technical Implementation (Terminal Commands)
+## Technical Implementation (Terminal Commands)
 
 ### 1. Repository Management & Troubleshooting
 During development, specific Git workflows were used to resolve merge conflicts and ensure repository integrity:
