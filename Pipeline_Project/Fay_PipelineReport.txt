@@ -22,6 +22,7 @@ SRR5660033	10,034	        4,438
 SRR5660044	10,034	        5,476
 SRR5660045	10,034	        3,903
 Step 5: BLAST Verification
+Subject_ID | %_Identity | Length | Mismatch | Gaps | Q_Start | Q_End | S_Start | S_End | Bit_Score | E-Value | Title
 YP_081532.1     98.352  1396    1       1384    1396    1       2440    0.0     YP_081532.1
 YP_081526.1     99.691  1296    7       1302    1296    1       2372    0.0     YP_081526.1
 YP_081612.1     97.313  1005    3       1006    7       1010    1705    0.0     YP_081612.1
