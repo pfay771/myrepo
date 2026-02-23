@@ -20,17 +20,3 @@ The pipeline is managed by **Snakemake** and follows these logical steps:
 4.  **Enrichment/Filtering:** Using **Bowtie 2** to extract only viral reads, effectively removing host (human) DNA contamination.
 5.  **Assembly:** Performing *de novo* assembly of filtered reads into contigs using **SPAdes**.
 6.  **Verification:** Validating assembled contigs via **BLAST** against a Betaherpesvirinae database.
-
-
-
----
-
-## Technical Implementation (Terminal Commands)
-
-### 1. Repository Management & Troubleshooting
-During development, specific Git workflows were used to resolve merge conflicts and ensure repository integrity:
-```bash
-# Force-syncing local progress to GitHub to resolve conflicts
-git add .
-git commit -m "Finalized pipeline and documentation"
-git push origin main --force
