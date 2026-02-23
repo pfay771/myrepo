@@ -1,0 +1,17 @@
+#data subsetting to meet the 2 min requirement
+head -n 400000 data/SRR5660030_1.fastq > data/SRR5660030_1.subset.fastq
+
+#viral read enrichment
+bowtie2 -x results/indices/hcmv_bt2 -1 data/sample_1.fastq -2 data/sample_2.fastq --al-conc results/sample_mapped.fastq
+
+#automated verification----> Building the database and searching
+makeblastdb -in hcmv_cds.fasta -dbtype nucl -out results/indices/betaherpesvirinae
+blastn -query results/assembly/contigs.fasta -db results/indices/betaherpesvirinae -outfmt 6
+
+# Required Tools:
+# 1. Snakemake (Workflow management)
+# 2. Kallisto (Quantification)
+# 3. Bowtie2 (Filtering)
+# 4. SPAdes (Assembly)
+# 5. BLAST+ (Verification)
+
