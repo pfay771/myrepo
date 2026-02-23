@@ -23,12 +23,12 @@ rule extract_cds:
 
 rule build_kallisto_index:
     input: "hcmv_cds.fasta"
-    output: "hcmv_index.idx"
+    output: "results/indices/hcmv_index.idx"
     shell: "kallisto index -i {output} {input}"
 
 rule kallisto_quant:
     input:
-        index = "hcmv_index.idx",
+        index = "results/indices/hcmv_index.idx",
         fq1 = "data/{sample}_1.fastq",
         fq2 = "data/{sample}_2.fastq"
     output: directory("results/{sample}_kallisto")
@@ -41,12 +41,12 @@ rule run_sleuth:
 
 rule bowtie2_index:
     input: "hcmv_cds.fasta"
-    output: multiext("hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2")
-    shell: "bowtie2-build {input} hcmv_bt2"
+    output: multiext("results/indices/hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2")
+    shell: "bowtie2-build {input} results/indices/hcmv_bt2"
 
 rule bowtie2_filter:
     input:
-        idx = multiext("hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2"),
+        idx = multiext("results/indices/hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2"),
         fq1 = "data/{sample}_1.fastq",
         fq2 = "data/{sample}_2.fastq"
     output:
@@ -54,7 +54,7 @@ rule bowtie2_filter:
         m2 = "results/{sample}_mapped.2.fastq"
     shell:
         """
-        bowtie2 -x hcmv_bt2 -1 {input.fq1} -2 {input.fq2} --al-conc results/{wildcards.sample}_mapped.fastq -S results/{wildcards.sample}.sam
+        bowtie2 -x results/indices/hcmv_bt2 -1 {input.fq1} -2 {input.fq2} --al-conc results/{wildcards.sample}_mapped.fastq -S results/{wildcards.sample}.sam
         if [ -f results/{wildcards.sample}_mapped.fastq.1 ]; then
             mv results/{wildcards.sample}_mapped.fastq.1 results/{wildcards.sample}_mapped.1.fastq
             mv results/{wildcards.sample}_mapped.fastq.2 results/{wildcards.sample}_mapped.2.fastq
