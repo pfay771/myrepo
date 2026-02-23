@@ -1,0 +1,9 @@
+- "left reads":
+  - "/home/pfay/Pipeline_Project/results/SRR5660045_assembly/corrected/SRR5660045_mapped.1.00.0_0.cor.fastq.gz"
+  "number": !!int "1"
+  "orientation": "fr"
+  "right reads":
+  - "/home/pfay/Pipeline_Project/results/SRR5660045_assembly/corrected/SRR5660045_mapped.2.00.0_0.cor.fastq.gz"
+  "single reads":
+  - "/home/pfay/Pipeline_Project/results/SRR5660045_assembly/corrected/SRR5660045_mapped._unpaired.00.0_0.cor.fastq.gz"
+  "type": "paired-end"

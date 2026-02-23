@@ -1,0 +1,35 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+assemble_spades             4
+bowtie2_filter              4
+build_kallisto_index        1
+final_report                1
+kallisto_quant              4
+run_sleuth                  1
+total                      16
+
+Select jobs to execute...
+
+[Mon Feb 23 12:48:46 2026]
+rule bowtie2_filter:
+    input: hcmv_bt2.1.bt2, hcmv_bt2.2.bt2, hcmv_bt2.3.bt2, hcmv_bt2.4.bt2, hcmv_bt2.rev.1.bt2, hcmv_bt2.rev.2.bt2, data/SRR5660033_1.fastq, data/SRR5660033_2.fastq
+    output: results/SRR5660033_mapped.fastq.1, results/SRR5660033_mapped.fastq.2
+    jobid: 13
+    reason: Missing output files: results/SRR5660033_mapped.fastq.1, results/SRR5660033_mapped.fastq.2
+    wildcards: sample=SRR5660033
+    resources: tmpdir=/tmp
+
+Waiting at most 60 seconds for missing files.
+MissingOutputException in rule bowtie2_filter in file /home/pfay/Pipeline_Project/Snakefile, line 41:
+Job 13  completed successfully, but some output files are missing. Missing files after 60 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+results/SRR5660033_mapped.fastq.1
+results/SRR5660033_mapped.fastq.2
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2026-02-23T124845.493922.snakemake.log

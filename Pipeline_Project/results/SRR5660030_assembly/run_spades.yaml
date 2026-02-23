@@ -1,0 +1,122 @@
+- STAGE: Before start
+  args: []
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: 'true'
+  short_name: before_start
+- STAGE: Read error correction
+  args: []
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: 'true'
+  short_name: ec_start
+- STAGE: Read error correction
+  args:
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected/configs/config.info
+  config_dir: corrected
+  del_after:
+  - tmp/hammer_6ni4a3gh
+  output_files:
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected/corrected.yaml
+  path: /usr/libexec/spades/spades-hammer
+  short_name: ec_runtool
+- STAGE: corrected reads compression
+  args:
+  - /usr/share/spades/spades_pipeline/scripts/compress_all.py
+  - --input_file
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected/corrected.yaml
+  - --ext_python_modules_home
+  - /usr/share/spades
+  - --max_threads
+  - '16'
+  - --output_dir
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected
+  - --gzip_output
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: /usr/bin/python3
+  short_name: ec_compress
+- STAGE: Read error correction
+  args: []
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: 'true'
+  short_name: ec_finish
+- STAGE: Assembling
+  args: []
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: 'true'
+  short_name: as_start
+- STAGE: K127
+  args:
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/configs/config.info
+  config_dir: K127
+  del_after: []
+  output_files: []
+  path: /usr/libexec/spades/spades-core
+  short_name: k127
+- STAGE: Copy files
+  args:
+  - /usr/share/spades/spades_pipeline/scripts/copy_files.py
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/before_rr.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/before_rr.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph_after_simplification.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph_after_simplification.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/final_contigs.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/contigs.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/first_pe_contigs.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/first_pe_contigs.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/strain_graph.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/strain_graph.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/scaffolds.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.fasta
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/scaffolds.paths
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.paths
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph_with_scaffolds.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph_with_scaffolds.gfa
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph.fastg
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph.fastg
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/final_contigs.paths
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/contigs.paths
+  config_dir: ''
+  del_after:
+  - .bin_reads
+  - tmp/spades_dxs_jrxm
+  output_files: []
+  path: /usr/bin/python3
+  short_name: copy_files
+- STAGE: Assembling
+  args: []
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: 'true'
+  short_name: as_finish
+- STAGE: Breaking scaffolds
+  args:
+  - /usr/share/spades/spades_pipeline/scripts/breaking_scaffolds_script.py
+  - --result_scaffolds_filename
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.fasta
+  - --misc_dir
+  - /home/pfay/Pipeline_Project/results/SRR5660030_assembly/misc
+  - --threshold_for_breaking_scaffolds
+  - '3'
+  config_dir: ''
+  del_after: []
+  output_files: []
+  path: /usr/bin/python3
+  short_name: bs
+- STAGE: Terminate
+  args: []
+  config_dir: ''
+  del_after:
+  - configs
+  output_files: []
+  path: 'true'
+  short_name: terminate

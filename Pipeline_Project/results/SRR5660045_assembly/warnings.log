@@ -1,0 +1,5 @@
+
+=== Error correction and assembling warnings:
+ * 0:00:02.101     1M / 18M   WARN    General                 (kmer_coverage_model.cpp   : 327)   Valley value was estimated improperly, reset to 3
+ * 0:00:02.422     1M / 23M   WARN    General                 (simplification.cpp        : 504)   The determined erroneous connection coverage threshold may be determined improperly
+======= Warnings saved to /home/pfay/Pipeline_Project/results/SRR5660045_assembly/warnings.log

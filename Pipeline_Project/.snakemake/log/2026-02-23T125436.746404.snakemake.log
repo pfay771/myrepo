@@ -1,0 +1,39 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+assemble_spades             4
+bowtie2_filter              4
+build_kallisto_index        1
+final_report                1
+kallisto_quant              4
+run_sleuth                  1
+total                      16
+
+Select jobs to execute...
+
+[Mon Feb 23 12:54:37 2026]
+rule bowtie2_filter:
+    input: hcmv_bt2.1.bt2, hcmv_bt2.2.bt2, hcmv_bt2.3.bt2, hcmv_bt2.4.bt2, hcmv_bt2.rev.1.bt2, hcmv_bt2.rev.2.bt2, data/SRR5660033_1.fastq, data/SRR5660033_2.fastq
+    output: results/SRR5660033_mapped.1.fastq, results/SRR5660033_mapped.2.fastq
+    jobid: 13
+    reason: Missing output files: results/SRR5660033_mapped.2.fastq, results/SRR5660033_mapped.1.fastq
+    wildcards: sample=SRR5660033
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:54:37 2026]
+Error in rule bowtie2_filter:
+    jobid: 13
+    input: hcmv_bt2.1.bt2, hcmv_bt2.2.bt2, hcmv_bt2.3.bt2, hcmv_bt2.4.bt2, hcmv_bt2.rev.1.bt2, hcmv_bt2.rev.2.bt2, data/SRR5660033_1.fastq, data/SRR5660033_2.fastq
+    output: results/SRR5660033_mapped.1.fastq, results/SRR5660033_mapped.2.fastq
+    shell:
+        bowtie2 -x hcmv_bt2 -1 data/SRR5660033_1.fastq -2 data/SRR5660033_2.fastq --al-conc-paired results/SRR5660033_mapped.%.fastq -S results/SRR5660033.sam
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2026-02-23T125436.746404.snakemake.log

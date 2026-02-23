@@ -1,0 +1,12 @@
+set -e
+true
+true
+/usr/libexec/spades/spades-hammer /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected/configs/config.info
+/usr/bin/python3 /usr/share/spades/spades_pipeline/scripts/compress_all.py --input_file /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected/corrected.yaml --ext_python_modules_home /usr/share/spades --max_threads 16 --output_dir /home/pfay/Pipeline_Project/results/SRR5660030_assembly/corrected --gzip_output
+true
+true
+/usr/libexec/spades/spades-core /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/configs/config.info
+/usr/bin/python3 /usr/share/spades/spades_pipeline/scripts/copy_files.py /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/before_rr.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/before_rr.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph_after_simplification.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph_after_simplification.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/final_contigs.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/contigs.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/first_pe_contigs.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/first_pe_contigs.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/strain_graph.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/strain_graph.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/scaffolds.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.fasta /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/scaffolds.paths /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.paths /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph_with_scaffolds.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph_with_scaffolds.gfa /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/assembly_graph.fastg /home/pfay/Pipeline_Project/results/SRR5660030_assembly/assembly_graph.fastg /home/pfay/Pipeline_Project/results/SRR5660030_assembly/K127/final_contigs.paths /home/pfay/Pipeline_Project/results/SRR5660030_assembly/contigs.paths
+true
+/usr/bin/python3 /usr/share/spades/spades_pipeline/scripts/breaking_scaffolds_script.py --result_scaffolds_filename /home/pfay/Pipeline_Project/results/SRR5660030_assembly/scaffolds.fasta --misc_dir /home/pfay/Pipeline_Project/results/SRR5660030_assembly/misc --threshold_for_breaking_scaffolds 3
+true

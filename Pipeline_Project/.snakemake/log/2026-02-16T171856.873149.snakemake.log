@@ -1,0 +1,36 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+all                1
+extract_cds        1
+total              2
+
+Select jobs to execute...
+
+[Mon Feb 16 17:18:57 2026]
+rule extract_cds:
+    output: hcmv_cds.fasta, LastName_PipelineReport.txt
+    jobid: 1
+    reason: Missing output files: hcmv_cds.fasta
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:18:58 2026]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:18:58 2026]
+localrule all:
+    input: hcmv_cds.fasta
+    jobid: 0
+    reason: Input files updated by another job: hcmv_cds.fasta
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:18:58 2026]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2026-02-16T171856.873149.snakemake.log

@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+all                1
+extract_cds        1
+total              2
+
+Select jobs to execute...
+
+[Mon Feb 16 17:17:40 2026]
+rule extract_cds:
+    output: hcmv_cds.fasta, LastName_PipelineReport.txt
+    jobid: 1
+    reason: Missing output files: hcmv_cds.fasta
+    resources: tmpdir=/tmp
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule extract_cds in file /home/pfay/Pipeline_Project/Snakefile, line 11:
+Job 1  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+hcmv_cds.fasta
+LastName_PipelineReport.txt
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2026-02-16T171739.714074.snakemake.log

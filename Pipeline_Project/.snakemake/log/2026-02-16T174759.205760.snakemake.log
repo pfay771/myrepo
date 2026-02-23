@@ -1,0 +1,122 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+build_kallisto_index        1
+final_report                1
+kallisto_quant              4
+run_sleuth                  1
+total                       8
+
+Select jobs to execute...
+
+[Mon Feb 16 17:47:59 2026]
+rule build_kallisto_index:
+    input: hcmv_cds.fasta
+    output: hcmv_index.idx
+    jobid: 5
+    reason: Missing output files: hcmv_index.idx
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:00 2026]
+Finished job 5.
+1 of 8 steps (12%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:00 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660030_1.fastq, data/SRR5660030_2.fastq
+    output: results/SRR5660030_kallisto
+    jobid: 4
+    reason: Missing output files: results/SRR5660030_kallisto; Updated input files: data/SRR5660030_2.fastq, data/SRR5660030_1.fastq; Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660030
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:01 2026]
+Finished job 4.
+2 of 8 steps (25%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:01 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660044_1.fastq, data/SRR5660044_2.fastq
+    output: results/SRR5660044_kallisto
+    jobid: 7
+    reason: Missing output files: results/SRR5660044_kallisto; Updated input files: data/SRR5660044_1.fastq, data/SRR5660044_2.fastq; Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660044
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:02 2026]
+Finished job 7.
+3 of 8 steps (38%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:02 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660045_1.fastq, data/SRR5660045_2.fastq
+    output: results/SRR5660045_kallisto
+    jobid: 8
+    reason: Missing output files: results/SRR5660045_kallisto; Updated input files: data/SRR5660045_1.fastq, data/SRR5660045_2.fastq; Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660045
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:03 2026]
+Finished job 8.
+4 of 8 steps (50%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:03 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660033_1.fastq, data/SRR5660033_2.fastq
+    output: results/SRR5660033_kallisto
+    jobid: 6
+    reason: Missing output files: results/SRR5660033_kallisto; Updated input files: data/SRR5660033_2.fastq, data/SRR5660033_1.fastq; Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660033
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:03 2026]
+Finished job 6.
+5 of 8 steps (62%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:03 2026]
+rule run_sleuth:
+    input: results/SRR5660030_kallisto, results/SRR5660033_kallisto, results/SRR5660044_kallisto, results/SRR5660045_kallisto
+    output: results/sleuth_results.txt
+    jobid: 3
+    reason: Missing output files: results/sleuth_results.txt; Input files updated by another job: results/SRR5660030_kallisto, results/SRR5660033_kallisto, results/SRR5660045_kallisto, results/SRR5660044_kallisto
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:07 2026]
+Finished job 3.
+6 of 8 steps (75%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:07 2026]
+rule final_report:
+    input: hcmv_cds.fasta, results/sleuth_results.txt
+    output: Fay_PipelineReport.txt
+    jobid: 1
+    reason: Input files updated by another job: results/sleuth_results.txt
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:09 2026]
+Finished job 1.
+7 of 8 steps (88%) done
+Select jobs to execute...
+
+[Mon Feb 16 17:48:09 2026]
+localrule all:
+    input: Fay_PipelineReport.txt
+    jobid: 0
+    reason: Input files updated by another job: Fay_PipelineReport.txt
+    resources: tmpdir=/tmp
+
+[Mon Feb 16 17:48:09 2026]
+Finished job 0.
+8 of 8 steps (100%) done
+Complete log: .snakemake/log/2026-02-16T174759.205760.snakemake.log

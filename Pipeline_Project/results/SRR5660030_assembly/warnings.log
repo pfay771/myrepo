@@ -1,0 +1,5 @@
+
+=== Error correction and assembling warnings:
+ * 0:00:02.764     2M / 21M   WARN    General                 (kmer_coverage_model.cpp   : 366)   Failed to determine erroneous kmer threshold. Threshold set to: 16
+ * 0:00:03.190     2M / 26M   WARN    General                 (simplification.cpp        : 504)   The determined erroneous connection coverage threshold may be determined improperly
+======= Warnings saved to /home/pfay/Pipeline_Project/results/SRR5660030_assembly/warnings.log

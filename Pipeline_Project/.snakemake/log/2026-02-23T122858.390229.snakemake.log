@@ -1,0 +1,135 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+build_kallisto_index        1
+extract_cds                 1
+final_report                1
+kallisto_quant              4
+run_sleuth                  1
+total                       9
+
+Select jobs to execute...
+
+[Mon Feb 23 12:28:59 2026]
+rule extract_cds:
+    output: hcmv_cds.fasta
+    jobid: 2
+    reason: Code has changed since last execution
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:00 2026]
+Finished job 2.
+1 of 9 steps (11%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:00 2026]
+rule build_kallisto_index:
+    input: hcmv_cds.fasta
+    output: hcmv_index.idx
+    jobid: 5
+    reason: Input files updated by another job: hcmv_cds.fasta
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:01 2026]
+Finished job 5.
+2 of 9 steps (22%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:01 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660030_1.fastq, data/SRR5660030_2.fastq
+    output: results/SRR5660030_kallisto
+    jobid: 4
+    reason: Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660030
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:01 2026]
+Finished job 4.
+3 of 9 steps (33%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:01 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660044_1.fastq, data/SRR5660044_2.fastq
+    output: results/SRR5660044_kallisto
+    jobid: 7
+    reason: Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660044
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:02 2026]
+Finished job 7.
+4 of 9 steps (44%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:02 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660045_1.fastq, data/SRR5660045_2.fastq
+    output: results/SRR5660045_kallisto
+    jobid: 8
+    reason: Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660045
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:03 2026]
+Finished job 8.
+5 of 9 steps (56%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:03 2026]
+rule kallisto_quant:
+    input: hcmv_index.idx, data/SRR5660033_1.fastq, data/SRR5660033_2.fastq
+    output: results/SRR5660033_kallisto
+    jobid: 6
+    reason: Input files updated by another job: hcmv_index.idx
+    wildcards: sample=SRR5660033
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:04 2026]
+Finished job 6.
+6 of 9 steps (67%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:04 2026]
+rule run_sleuth:
+    input: results/SRR5660030_kallisto, results/SRR5660033_kallisto, results/SRR5660044_kallisto, results/SRR5660045_kallisto
+    output: results/sleuth_results.txt
+    jobid: 3
+    reason: Input files updated by another job: results/SRR5660044_kallisto, results/SRR5660033_kallisto, results/SRR5660030_kallisto, results/SRR5660045_kallisto
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:08 2026]
+Finished job 3.
+7 of 9 steps (78%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:08 2026]
+rule final_report:
+    input: hcmv_cds.fasta, results/sleuth_results.txt
+    output: Fay_PipelineReport.txt
+    jobid: 1
+    reason: Input files updated by another job: results/sleuth_results.txt, hcmv_cds.fasta
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:09 2026]
+Finished job 1.
+8 of 9 steps (89%) done
+Select jobs to execute...
+
+[Mon Feb 23 12:29:09 2026]
+localrule all:
+    input: Fay_PipelineReport.txt
+    jobid: 0
+    reason: Input files updated by another job: Fay_PipelineReport.txt
+    resources: tmpdir=/tmp
+
+[Mon Feb 23 12:29:09 2026]
+Finished job 0.
+9 of 9 steps (100%) done
+Complete log: .snakemake/log/2026-02-23T122858.390229.snakemake.log

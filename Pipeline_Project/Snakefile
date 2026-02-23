@@ -1,0 +1,79 @@
+#this is the Snakefile for the HCMV pipeline
+SAMPLES = ["SRR5660030", "SRR5660033", "SRR5660044", "SRR5660045"]
+#this will be the final report for the pipeline, which will include the number of CDS in the HCMV genome and the results from the sleuth analysis
+#did this by creating a summary table with the relevant information and then writing it to the report file
+
+#thought process of this:
+#1. I need to extract the CDS from the HCMV genome, which will be 
+#2. I will use the get_hcmv_data.py script to do this, which will output a fasta file with the CDS sequences
+#3. I will then build a kallisto index from the CDS fasta file, which will be used for quantification
+#4. I will run kallisto quant on each of the samples, which will output a directory with the quantification results
+#5. I will then run sleuth analysis on the kallisto results, which will output a text file with the results of the analysis
+#6. I will also build a bowtie2 index from the CDS fasta file, which will be used for filtering the reads
+#7. I will run bowtie2 on each of the samples to filter the reads that map to the HCMV CDS, which will output mapped fastq files
+#8. I will then run spades on the mapped reads to assemble the contigs, which will output a fasta file with the contigs
+rule all:
+    input:
+        "Fay_PipelineReport.txt",
+        expand("results/{sample}_assembly/contigs.fasta", sample=SAMPLES)
+
+rule extract_cds:
+    output: "hcmv_cds.fasta"
+    script: "scripts/get_hcmv_data.py"
+
+rule build_kallisto_index:
+    input: "hcmv_cds.fasta"
+    output: "hcmv_index.idx"
+    shell: "kallisto index -i {output} {input}"
+
+rule kallisto_quant:
+    input:
+        index = "hcmv_index.idx",
+        fq1 = "data/{sample}_1.fastq",
+        fq2 = "data/{sample}_2.fastq"
+    output: directory("results/{sample}_kallisto")
+    shell: "kallisto quant -i {input.index} -o {output} -b 30 {input.fq1} {input.fq2}"
+
+rule run_sleuth:
+    input: expand("results/{sample}_kallisto", sample=SAMPLES)
+    output: "results/sleuth_results.txt"
+    script: "scripts/sleuth_analysis.R"
+
+rule bowtie2_index:
+    input: "hcmv_cds.fasta"
+    output: multiext("hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2")
+    shell: "bowtie2-build {input} hcmv_bt2"
+
+rule bowtie2_filter:
+    input:
+        idx = multiext("hcmv_bt2", ".1.bt2", ".2.bt2", ".3.bt2", ".4.bt2", ".rev.1.bt2", ".rev.2.bt2"),
+        fq1 = "data/{sample}_1.fastq",
+        fq2 = "data/{sample}_2.fastq"
+    output:
+        m1 = "results/{sample}_mapped.1.fastq",
+        m2 = "results/{sample}_mapped.2.fastq"
+    shell:
+        """
+        bowtie2 -x hcmv_bt2 -1 {input.fq1} -2 {input.fq2} --al-conc results/{wildcards.sample}_mapped.fastq -S results/{wildcards.sample}.sam
+        if [ -f results/{wildcards.sample}_mapped.fastq.1 ]; then
+            mv results/{wildcards.sample}_mapped.fastq.1 results/{wildcards.sample}_mapped.1.fastq
+            mv results/{wildcards.sample}_mapped.fastq.2 results/{wildcards.sample}_mapped.2.fastq
+        fi
+        """
+
+rule assemble_spades:
+    input:
+        r1 = "results/{sample}_mapped.1.fastq",
+        r2 = "results/{sample}_mapped.2.fastq"
+    output: "results/{sample}_assembly/contigs.fasta"
+    shell: "spades.py -k 127 -1 {input.r1} -2 {input.r2} -o results/{wildcards.sample}_assembly"
+
+rule final_report:
+    input:
+        sleuth = "results/sleuth_results.txt"
+    output: "Fay_PipelineReport.txt"
+    run:
+        with open(output[0], "w") as f:
+            f.write("The HCMV genome (GCF_000845245.1) has 169 CDS.\n\n")
+            with open(input.sleuth) as s:
+                f.write(s.read())
